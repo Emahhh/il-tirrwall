@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
-import '@picocss/pico/css/pico.min.css';
+
 import axios from 'axios';
 
 interface Article {
@@ -35,6 +35,7 @@ function App() {
 
       // alert(JSON.stringify(res, null, 2));
       const text = res.data;
+      //alert("Testo trovato:" + text);
 
       const scriptTag = text.match(/<script id="__NEXT_DATA__".*<\/script>/g); // troviamo il tag <script id="__NEXT_DATA__" ... </script>
       if (!scriptTag || scriptTag.length == 0) { alert("Articolo non trovato."); return;}
@@ -56,6 +57,7 @@ function App() {
         return;
       }
 
+      alert("articolo settato:" + JSON.stringify(articleObj, null, 2));
       setArticle(articleObj);
     });
 
