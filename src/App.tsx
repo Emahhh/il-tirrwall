@@ -11,38 +11,37 @@ interface Article {
 }
 
 function App() {
-  const [inputURL, setInputURL] = useState('');
+  const [inputURL, setInputURL] = useState(  '');
   const [article, setArticle] = useState<Article>({ 
     title: '',
     summary: '',
     content: ''
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleClick = () => {
     if(inputURL == '') return;
-    
-    // standardizzare l'URL
 
     if(inputURL.match(/https:\/\/www.iltirreno.it\//g) == null) {
-      alert("URL non valido");
-      // TODO: sostituire con modal
+      alert("URL non valido"); // TODO: sostituire con modal
       return;
     }
 
-    axios.get(inputURL)
-    .then((res) => {
-      // Qui puoi utilizzare il contenuto della pagina
+    setLoading(true);
+    
 
-      // alert(JSON.stringify(res, null, 2));
-      const text = res.data;
-      //alert("Testo trovato:" + text);
+    axios.get(inputURL)
+    .then(async (res) => {
+      // Qui puoi utilizzare il contenuto della pagina
+      const text = res.data; // il contenuto della pagina
 
       const scriptTag = text.match(/<script id="__NEXT_DATA__".*<\/script>/g); // troviamo il tag <script id="__NEXT_DATA__" ... </script>
       if (!scriptTag || scriptTag.length == 0) { alert("Articolo non trovato."); return;}
-      const scriptContent = scriptTag[0]!.match(/(?<=>).*(?=<\/script>)/g)![0]; // estraiamo il contenuto del tag
+      const scriptContent = scriptTag[0]!.match(/<script id="__NEXT_DATA__".*>(.*)<\/script>/g)![0]!.replace(/<script id="__NEXT_DATA__".*>(.*)<\/script>/g, '$1'); // estraiamo il contenuto del tag (un JSON)
       if (!scriptContent) {alert("Articolo non trovato.");return;}
 
-      // convertiamo il contenuto del tag in un oggetto
+      // convertiamo il contenuto del tag in un oggetto Article
       let articleObj = null;
       try {
         articleObj = JSON.parse(scriptContent);
@@ -51,21 +50,24 @@ function App() {
         alert("Articolo non trovato nel JSON.");
         return;
       }
+
       
       if (!articleObj || !articleObj.title || !articleObj.summary || !articleObj.content){
         alert("Articolo non trovato");
         return;
       }
 
-      alert("articolo settato:" + JSON.stringify(articleObj, null, 2));
       setArticle(articleObj);
+      await new Promise(r => setTimeout(r, 100)); // aspetta 100ms prima di nascondere il loader, per un effetto più fluido in caso di caricamento veloce
+    
+    }).finally(() => {
+      setLoading(false);
     });
 
 
-    
-
   };
 
+  
   return (
     <div className="App">
 
@@ -76,10 +78,12 @@ function App() {
         <button onClick={ handleClick }>Leggi articolo</button>
       </div>
 
+      {loading && <article> <div id="loaderdiv" aria-busy="true"></div></article>}
+
       {
       // check if article is not null and has the title, summary and content properties
       // check if aricle is typeof Article
-        article && article.title && article.summary && article.content && article.title != '' && article.summary != '' && article.content != '' &&
+        article && !loading && article.title && article.summary && article.content && article.title != '' && article.summary != '' && article.content != '' &&
         <article>
           {article.title && <h1>{article.title}</h1>}
           {article.summary && <blockquote>{article.summary}</blockquote>}

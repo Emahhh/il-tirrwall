@@ -24,3 +24,8 @@ footer P{
   padding-top: 0rem;
   color:#201c1b71;
 }
+
+#loaderdiv{
+  font-size: 3rem;
+  height: 100vh;
+}
