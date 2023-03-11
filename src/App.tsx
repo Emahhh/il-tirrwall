@@ -3,9 +3,19 @@ import reactLogo from './assets/react.svg'
 import './App.css'
 import '@picocss/pico/css/pico.min.css';
 
+interface Article {
+  title: string;
+  summary: string;
+  content: string;
+}
+
 function App() {
   const [inputURL, setInputURL] = useState('');
-  const [article, setArticle] = useState({});
+  const [article, setArticle] = useState<Article>({ 
+    title: '',
+    summary: '',
+    content: ''
+  });
 
   const handleClick = () => {
     if(inputURL == '') return;
@@ -25,7 +35,7 @@ function App() {
 
       const scriptTag = text.match(/<script id="__NEXT_DATA__".*<\/script>/g); // troviamo il tag <script id="__NEXT_DATA__" ... </script>
       if (!scriptTag || scriptTag.length == 0) { alert("Articolo non trovato."); return;}
-      const scriptContent = scriptTag[0].match(/(?<=>).*(?=<\/script>)/g)[0]; // estraiamo il contenuto del tag
+      const scriptContent = scriptTag[0]!.match(/(?<=>).*(?=<\/script>)/g)![0]; // estraiamo il contenuto del tag
       if (!scriptContent) {alert("Articolo non trovato.");return;}
 
       // convertiamo il contenuto del tag in un oggetto
@@ -57,15 +67,18 @@ function App() {
       <h1 id="logotitle">Il Paywallreno</h1>
 
       <div>
-        <input type="text" placeholder="Inserisci URL articolo www.iltirreno.it/..." onChange={(e) => setInputURL(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter') handleClick()}} />
+        <input type="text" placeholder="Inserisci URL articolo" onChange={(e) => setInputURL(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter') handleClick()}} />
         <button onClick={ handleClick }>Leggi articolo</button>
       </div>
 
-      {article['title'] && 
+      {
+      // check if article is not null and has the title, summary and content properties
+      // check if aricle is typeof Article
+        article && article.title && article.summary && article.content && article.title != '' && article.summary != '' && article.content != '' &&
         <article>
-          {article['title'] && <h1>{article['title']}</h1>}
-          {article['summary'] && <p>{article['summary']}</p>}
-          {article['content'] && <div dangerouslySetInnerHTML={{__html: article['content']}}></div>}
+          {article.title && <h1>{article.title}</h1>}
+          {article.summary && <blockquote>{article.summary}</blockquote>}
+          {article.content && <div dangerouslySetInnerHTML={{ __html: article.content }}></div>}
         </article>
       }
       

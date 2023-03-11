@@ -58,3 +58,7 @@ button{
   font-weight: medium;
   letter-spacing: 1px;
 }
+
+blockquote{
+  border-color: #201c1b7c;
+}
