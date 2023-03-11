@@ -1,0 +1,60 @@
+body {
+  background-color: #f0ede6;
+  font-family: 'Roboto', sans-serif;
+}
+
+article{
+  text-align: left;
+  background-color: #F1EDE3;
+  box-shadow: #201c1b2d 3px 3px 6px 0px inset, #201c1b15 -3px -3px 6px 1px inset;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #201C1B;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 3rem;
+}
+
+/* first h1 in the document */
+#logotitle {
+  font-size: 2.7rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-family: 'Roboto Slab', serif;
+  color: #2F230E;
+}
+
+input {
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: 5px;
+  border: 0px solid #ccc;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;  
+  font-family: "Roboto Mono", monospace;
+  background-color: #EAE5D6;
+}
+
+button{
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
+  margin: 4px 2px;
+  cursor: pointer;
+  background-color: #CA9939;
+  box-shadow: 0 7px 6px 0 rgba(0, 0, 0, 0.342);
+  width: 66%;
+
+  font-size: 1em;
+  font-weight: medium;
+  letter-spacing: 1px;
+}

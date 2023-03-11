@@ -1,0 +1,19 @@
+#root {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 6%;
+  text-align: center;
+}
+
+footer {
+  margin-top: 0rem;
+  font-size: 0.8rem;
+  text-align: center;
+  padding-top: 0%;
+
+}
+
+footer P{
+  padding-top: 0rem;
+  color:#201c1b71;
+}
