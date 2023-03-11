@@ -64,10 +64,10 @@ function App() {
   return (
     <div className="App">
 
-      <h1 id="logotitle">Il Paywallreno</h1>
+      <h1 id="logotitle">Il Tirrwall</h1>
 
       <div>
-        <input type="text" placeholder="Inserisci URL articolo" onChange={(e) => setInputURL(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter') handleClick()}} />
+        <input type="text" placeholder="Inserisci l'URL dell'articolo" onChange={(e) => setInputURL(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter') handleClick()}} />
         <button onClick={ handleClick }>Leggi articolo</button>
       </div>
 

@@ -1,6 +1,6 @@
 {
   "name": "tirreno-paywall",
-  "homepage": ".",
+  "homepage": "https://emahhh.github.io/tirreno-paywall/",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -10,7 +10,7 @@
     "preview": "vite preview",
 
     "predeploy": "npm run build", 
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages --dist dist --branch gh-pages"
   },
   "dependencies": {
     "@picocss/pico": "^1.5.7",
