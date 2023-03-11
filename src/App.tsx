@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 import '@picocss/pico/css/pico.min.css';
+import axios from 'axios';
 
 interface Article {
   title: string;
@@ -28,10 +29,12 @@ function App() {
       return;
     }
 
-    fetch(inputURL)
-    .then(response => response.text())
-    .then(text => {
+    axios.get(inputURL)
+    .then((res) => {
       // Qui puoi utilizzare il contenuto della pagina
+
+      // alert(JSON.stringify(res, null, 2));
+      const text = res.data;
 
       const scriptTag = text.match(/<script id="__NEXT_DATA__".*<\/script>/g); // troviamo il tag <script id="__NEXT_DATA__" ... </script>
       if (!scriptTag || scriptTag.length == 0) { alert("Articolo non trovato."); return;}

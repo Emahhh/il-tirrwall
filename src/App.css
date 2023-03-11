@@ -5,6 +5,12 @@
   text-align: center;
 }
 
+html {
+  background-color: #f0ede6;
+  font-family: 'Roboto', sans-serif;
+}
+
+
 footer {
   margin-top: 0rem;
   font-size: 0.8rem;
