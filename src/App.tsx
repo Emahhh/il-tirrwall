@@ -11,6 +11,7 @@ interface Article {
 }
 
 function App() {
+
   const [inputURL, setInputURL] = useState(  '');
   const [article, setArticle] = useState<Article>({ 
     title: '',
@@ -66,35 +67,53 @@ function App() {
 
 
   };
-
+  
   
   return (
     <div className="App">
 
       <h1 id="logotitle">Il Tirrwall</h1>
-
-      <div>
-        <input type="text" placeholder="Inserisci l'URL dell'articolo" onChange={(e) => setInputURL(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter') handleClick()}} />
-        <button onClick={ handleClick }>Leggi articolo</button>
-      </div>
-
-      {loading && <article> <div id="loaderdiv" aria-busy="true"></div></article>}
-
-      {
-      // check if article is not null and has the title, summary and content properties
-      // check if aricle is typeof Article
-        article && !loading && article.title && article.summary && article.content && article.title != '' && article.summary != '' && article.content != '' &&
-        <article>
-          {article.title && <h1>{article.title}</h1>}
-          {article.summary && <blockquote>{article.summary}</blockquote>}
-          {article.content && <div dangerouslySetInnerHTML={{ __html: article.content }}></div>}
-        </article>
-      }
+      <InputBar handleClick={handleClick} setInputURL={setInputURL} />
+      <ArticleCard article={article} loading={loading} />
       
     </div>
 
     
   )
+}
+
+
+
+function InputBar({handleClick, setInputURL}: {handleClick: () => void, setInputURL: (value: string) => void}){ 
+
+
+  return ( 
+    <div>
+        <input type="text" placeholder="Inserisci l'URL dell'articolo" onChange={(e) => setInputURL(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter') handleClick()}} />
+        <button onClick={ handleClick }>Leggi articolo</button>
+    </div>
+  );
+}
+
+
+function ArticleCard({article, loading}: {article: Article, loading: boolean} ){
+
+  return (
+    <>
+    {loading && 
+    <article> <div id="loaderdiv" aria-busy="true"></div></article>}
+
+    {
+      article && !loading && article.title && article.summary && article.content && article.title != '' && article.summary != '' && article.content != '' &&
+      <article>
+        {article.title && <h1>{article.title}</h1>}
+        {article.summary && <blockquote>{article.summary}</blockquote>}
+        {article.content && <div dangerouslySetInnerHTML={{ __html: article.content }}></div>}
+      </article>
+    }
+    </>
+  );
+
 }
 
 export default App
